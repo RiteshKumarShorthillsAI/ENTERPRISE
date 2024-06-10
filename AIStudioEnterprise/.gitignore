@@ -111,3 +111,4 @@ cython_debug/
 
 users/migrations/*.py
 doclens/migrations/*.py
+/gdrive_secrets.json

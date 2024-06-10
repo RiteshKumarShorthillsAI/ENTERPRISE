@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 from decouple import config
-
+from datetime import timedelta
+import os,json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -59,7 +60,7 @@ ROOT_URLCONF = "AIStudioEnterprise.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -145,3 +146,21 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication"
     ],
 }
+
+GOOGLE_OAUTH2_CLIENT_SECRETS_JSON=json.loads(config("GOOGLE_OAUTH2_CLIENT_SECRETS_JSON"))
+GOOGLE_OAUTH2_REDIRECT_URI=config("GOOGLE_OAUTH2_REDIRECT_URI")
+
+SIMPLE_JWT = {
+    "EMAIL_VERIFY_TIME_LIMIT": timedelta(
+        minutes=int(config("EMAIL_VERIFY_TIME_LIMIT", default=60))
+    ),
+    "SIGNING_KEY": config("SIGNING_KEY", default=""),
+    "ALGORITHM": config("ALGORITHM", default="HS256"),
+}
+
+
+SEND_EMAIL = config("EMAIL_HOST_USER")
+SEND_MAIL_PASSWORD = config("EMAIL_HOST_PASSWORD")
+CLIENT_ID = config("CLIENT_ID")
+PASSWORD_SET_BASEURL = config("PASSWORD_SET_BASEURL")
+PASSWORD_RESET_BASEURL = config("PASSWORD_RESET_BASEURL")

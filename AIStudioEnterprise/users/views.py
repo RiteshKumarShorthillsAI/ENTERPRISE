@@ -16,7 +16,7 @@ from google.oauth2 import id_token
 from django.contrib.auth.models import User
 from django.db.models import F, Case, Value, When, OuterRef, Subquery
 from rest_framework.permissions import IsAuthenticated
-from users.logic_source import LoginUtils, UserAIProductManage
+# from users.logic_source import LoginUtils, UserAIProductManage
 
 
 class SendEmailRegistrationView(APIView):
@@ -114,7 +114,7 @@ class SendEmailRegistrationView(APIView):
             return Response({"Message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserLogin(APIView, LoginUtils):
+class UserLogin(APIView, ):
 
     def post(self, request):
         try:
@@ -139,7 +139,7 @@ class UserLogin(APIView, LoginUtils):
             )
 
 
-class UserProductsView(APIView, UserAIProductManage):
+class UserProductsView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
